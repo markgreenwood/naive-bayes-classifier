@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start:dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "Mark Greenwood <mrkjgreenwood@gmail.com> (http://markjgreenwood.com/)",
   "license": "UNLICENSED",
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@types/jest": "^29.5.12",
     "eslint": "^9.9.0",
     "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
     "typescript-eslint": "^8.1.0"
   }
 }

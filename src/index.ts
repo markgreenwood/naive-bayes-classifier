@@ -1,23 +1,24 @@
-var easy = 'easy';
-var medium = 'medium';
-var hard = 'hard';
+const easy = 'easy';
+const medium = 'medium';
+const hard = 'hard';
 
-imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
-somewhereOverTheRainbow = ['c', 'em', 'f', 'g', 'am'];
-tooManyCooks = ['c', 'g', 'f'];
-iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
-babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
-creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
-paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'];
-toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7'];
-bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
+const imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
+const somewhereOverTheRainbow = ['c', 'em', 'f', 'g', 'am'];
+const tooManyCooks = ['c', 'g', 'f'];
+const iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
+const babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
+const creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
+const paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'];
+const toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7'];
+const bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
-var songs = [];
-var allChords = new Set();
-var labelCounts = new Map();
-var labelProbabilities = new Map();
-var chordCountsInLabels = new Map();
-var probabilityOfChordsInLabels = new Map();
+type Song = { label: string, chords: string[] };
+const songs: Song[] = [];
+const allChords = new Set();
+const labelCounts = new Map();
+const labelProbabilities = new Map();
+const chordCountsInLabels = new Map();
+let probabilityOfChordsInLabels = new Map();
 
 function train(chords, label) {
     songs.push({label, chords});
@@ -74,14 +75,14 @@ setLabelProbabilities();
 setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
-function classify(chords) {
-    var smoothing = 1.01;
+export function classify(chords) {
+    const smoothing = 1.01;
     console.log(labelProbabilities);
-    var classified = new Map();
+    const classified = new Map();
     labelProbabilities.forEach(function (_probabilities, difficulty) {
-        var first = labelProbabilities.get(difficulty) + smoothing;
+        let first = labelProbabilities.get(difficulty) + smoothing;
         chords.forEach(function (chord) {
-            var probabilityOfChordInLabel = probabilityOfChordsInLabels.get(difficulty)[chord];
+            const probabilityOfChordInLabel = probabilityOfChordsInLabels.get(difficulty)[chord];
             if (probabilityOfChordInLabel) {
                 first = first * (probabilityOfChordInLabel + smoothing);
             }
@@ -89,6 +90,7 @@ function classify(chords) {
         classified.set(difficulty, first);
     });
     console.log(classified);
+    return classified;
 }
 
 classify(['d', 'g', 'e', 'dm']);
