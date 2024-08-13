@@ -61,7 +61,6 @@ describe("classify", () => {
   );
   songList.addSong("bulletproof", ["d#m", "g#", "b", "f#", "g#m", "c#"], 2);
   trainAll();
-  console.log(classifier.chordCountsInLabels);
 
   it("classifies", () => {
     const classified = classifier.classify([
