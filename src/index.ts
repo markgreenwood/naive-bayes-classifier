@@ -1,3 +1,12 @@
+export function fileName() {
+  const theError = new Error("here I am");
+  return theError.stack?.match(/\/(\w+\.ts):/)?.[1] ?? "";
+}
+
+export function welcomeMessage() {
+  return `Welcome to ${fileName()}`;
+}
+
 const easy = "easy";
 const medium = "medium";
 const hard = "hard";
@@ -27,10 +36,11 @@ const toxic = ["cm", "eb", "g", "cdim", "eb7", "d7", "db7", "ab", "gmaj7"];
 const bulletproof = ["d#m", "g#", "b", "f#", "g#m", "c#"];
 
 type Song = { label: string; chords: string[] };
+
 const songs: Song[] = [];
 const allChords = new Set();
 const labelCounts = new Map();
-const labelProbabilities = new Map();
+export const labelProbabilities = new Map();
 const chordCountsInLabels = new Map();
 let probabilityOfChordsInLabels = new Map();
 
@@ -93,7 +103,6 @@ setProbabilityOfChordsInLabels();
 
 export function classify(chords) {
   const smoothing = 1.01;
-  console.log(labelProbabilities);
   const classified = new Map();
   labelProbabilities.forEach(function (_probabilities, difficulty) {
     let first = labelProbabilities.get(difficulty) + smoothing;
@@ -108,6 +117,3 @@ export function classify(chords) {
   });
   return classified;
 }
-
-classify(["d", "g", "e", "dm"]);
-classify(["f#m7", "a", "dadd9", "dmaj7", "bm", "bm7", "d", "f#m"]);

@@ -1,6 +1,20 @@
-import { classify } from "../src";
+import { classify, labelProbabilities, welcomeMessage } from "../src";
 
-describe("Basic test", () => {
+describe("welcomeMessage", () => {
+  it("returns a welcome message", () => {
+    expect(welcomeMessage()).toEqual("Welcome to index.ts");
+  });
+});
+
+describe("labelProbabilities", () => {
+  it("are correct", () => {
+    expect(labelProbabilities.get("easy")).toEqual(0.3333333333333333);
+    expect(labelProbabilities.get("medium")).toEqual(0.3333333333333333);
+    expect(labelProbabilities.get("hard")).toEqual(0.3333333333333333);
+  });
+});
+
+describe("classify", () => {
   it("classifies", () => {
     const classified = classify([
       "f#m7",
