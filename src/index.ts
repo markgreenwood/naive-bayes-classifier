@@ -97,19 +97,18 @@ export function classify(chords) {
   const smoothing = 1.01;
   const classified = new Map();
   classifier.labelProbabilities.forEach(function (_probabilities, difficulty) {
-    const likelihoods = [
+    const totalLikelihood = chords.reduce(
+      function (total, chord) {
+        const probabilityOfChordInLabel =
+          classifier.probabilityOfChordsInLabels.get(difficulty)[chord];
+        if (probabilityOfChordInLabel) {
+          return total * (probabilityOfChordInLabel + smoothing);
+        } else {
+          return total;
+        }
+      },
       classifier.labelProbabilities.get(difficulty) + smoothing,
-    ];
-    chords.forEach(function (chord) {
-      const probabilityOfChordInLabel =
-        classifier.probabilityOfChordsInLabels.get(difficulty)[chord];
-      if (probabilityOfChordInLabel) {
-        likelihoods.push(probabilityOfChordInLabel + smoothing);
-      }
-    });
-    const totalLikelihood = likelihoods.reduce(function (total, index) {
-      return total * index;
-    });
+    );
     classified.set(difficulty, totalLikelihood);
   });
   return classified;
