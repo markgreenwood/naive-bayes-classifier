@@ -1,4 +1,4 @@
-import { classify, labelProbabilities, trainAll, welcomeMessage } from "../src";
+import { classifier, classify, trainAll, welcomeMessage } from "../src";
 
 describe("welcomeMessage", () => {
   it("returns a welcome message", () => {
@@ -8,9 +8,15 @@ describe("welcomeMessage", () => {
 
 describe("labelProbabilities", () => {
   it("are correct", () => {
-    expect(labelProbabilities.get("easy")).toEqual(0.3333333333333333);
-    expect(labelProbabilities.get("medium")).toEqual(0.3333333333333333);
-    expect(labelProbabilities.get("hard")).toEqual(0.3333333333333333);
+    expect(classifier.labelProbabilities.get("easy")).toEqual(
+      0.3333333333333333,
+    );
+    expect(classifier.labelProbabilities.get("medium")).toEqual(
+      0.3333333333333333,
+    );
+    expect(classifier.labelProbabilities.get("hard")).toEqual(
+      0.3333333333333333,
+    );
   });
 });
 
