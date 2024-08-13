@@ -1,4 +1,4 @@
-import { classify, labelProbabilities, welcomeMessage } from "../src";
+import { classify, labelProbabilities, trainAll, welcomeMessage } from "../src";
 
 describe("welcomeMessage", () => {
   it("returns a welcome message", () => {
@@ -15,6 +15,7 @@ describe("labelProbabilities", () => {
 });
 
 describe("classify", () => {
+  trainAll();
   it("classifies", () => {
     const classified = classify([
       "f#m7",

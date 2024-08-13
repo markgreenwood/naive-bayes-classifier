@@ -11,29 +11,41 @@ const easy = "easy";
 const medium = "medium";
 const hard = "hard";
 
-const imagine = ["c", "cmaj7", "f", "am", "dm", "g", "e7"];
-const somewhereOverTheRainbow = ["c", "em", "f", "g", "am"];
-const tooManyCooks = ["c", "g", "f"];
-const iWillFollowYouIntoTheDark = ["f", "dm", "bb", "c", "a", "bbm"];
-const babyOneMoreTime = ["cm", "g", "bb", "eb", "fm", "ab"];
-const creep = ["g", "gsus4", "b", "bsus4", "c", "cmsus4", "cm6"];
-const paperBag = [
-  "bm7",
-  "e",
-  "c",
-  "g",
-  "b7",
-  "f",
-  "em",
-  "a",
-  "cmaj7",
-  "em7",
-  "a7",
-  "f7",
-  "b",
-];
-const toxic = ["cm", "eb", "g", "cdim", "eb7", "d7", "db7", "ab", "gmaj7"];
-const bulletproof = ["d#m", "g#", "b", "f#", "g#m", "c#"];
+let imagine;
+let somewhereOverTheRainbow;
+let tooManyCooks;
+let iWillFollowYouIntoTheDark;
+let babyOneMoreTime;
+let creep;
+let paperBag;
+let toxic;
+let bulletproof;
+
+function setSongs() {
+  imagine = ["c", "cmaj7", "f", "am", "dm", "g", "e7"];
+  somewhereOverTheRainbow = ["c", "em", "f", "g", "am"];
+  tooManyCooks = ["c", "g", "f"];
+  iWillFollowYouIntoTheDark = ["f", "dm", "bb", "c", "a", "bbm"];
+  babyOneMoreTime = ["cm", "g", "bb", "eb", "fm", "ab"];
+  creep = ["g", "gsus4", "b", "bsus4", "c", "cmsus4", "cm6"];
+  paperBag = [
+    "bm7",
+    "e",
+    "c",
+    "g",
+    "b7",
+    "f",
+    "em",
+    "a",
+    "cmaj7",
+    "em7",
+    "a7",
+    "f7",
+    "b",
+  ];
+  toxic = ["cm", "eb", "g", "cdim", "eb7", "d7", "db7", "ab", "gmaj7"];
+  bulletproof = ["d#m", "g#", "b", "f#", "g#m", "c#"];
+}
 
 type Song = { label: string; chords: string[] };
 
@@ -87,19 +99,25 @@ function setProbabilityOfChordsInLabels() {
   });
 }
 
-train(imagine, easy);
-train(somewhereOverTheRainbow, easy);
-train(tooManyCooks, easy);
-train(iWillFollowYouIntoTheDark, medium);
-train(babyOneMoreTime, medium);
-train(creep, medium);
-train(paperBag, hard);
-train(toxic, hard);
-train(bulletproof, hard);
+export function trainAll() {
+  setSongs();
+  train(imagine, easy);
+  train(somewhereOverTheRainbow, easy);
+  train(tooManyCooks, easy);
+  train(iWillFollowYouIntoTheDark, medium);
+  train(babyOneMoreTime, medium);
+  train(creep, medium);
+  train(paperBag, hard);
+  train(toxic, hard);
+  train(bulletproof, hard);
+  setLabelsAndProbabilities();
+}
 
-setLabelProbabilities();
-setChordCountsInLabels();
-setProbabilityOfChordsInLabels();
+function setLabelsAndProbabilities() {
+  setLabelProbabilities();
+  setChordCountsInLabels();
+  setProbabilityOfChordsInLabels();
+}
 
 export function classify(chords) {
   const smoothing = 1.01;
