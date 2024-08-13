@@ -1,10 +1,4 @@
-import {
-  classifier,
-  classify,
-  songList,
-  trainAll,
-  welcomeMessage,
-} from "../src";
+import { classifier, songList, trainAll, welcomeMessage } from "../src";
 
 describe("welcomeMessage", () => {
   it("returns a welcome message", () => {
@@ -68,7 +62,7 @@ describe("classify", () => {
   songList.addSong("bulletproof", ["d#m", "g#", "b", "f#", "g#m", "c#"], 2);
   trainAll();
   it("classifies", () => {
-    const classified = classify([
+    const classified = classifier.classify([
       "f#m7",
       "a",
       "dadd9",
@@ -84,7 +78,7 @@ describe("classify", () => {
   });
 
   it("classifies again", () => {
-    const classified = classify(["d", "g", "e", "dm"]);
+    const classified = classifier.classify(["d", "g", "e", "dm"]);
     expect(classified.get("easy")).toEqual(2.023094827160494);
     expect(classified.get("medium")).toEqual(1.855758613168724);
     expect(classified.get("hard")).toEqual(1.855758613168724);

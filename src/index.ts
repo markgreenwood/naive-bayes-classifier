@@ -14,6 +14,28 @@ export const classifier = {
   labelProbabilities: new Map(),
   chordCountsInLabels: new Map(),
   probabilityOfChordsInLabels: new Map(),
+  classify: function classify(chords) {
+    const smoothing = 1.01;
+    const classified = new Map();
+    classifier.labelProbabilities.forEach(
+      function (_probabilities, difficulty) {
+        const totalLikelihood = chords.reduce(
+          function (total, chord) {
+            const probabilityOfChordInLabel =
+              classifier.probabilityOfChordsInLabels.get(difficulty)[chord];
+            if (probabilityOfChordInLabel) {
+              return total * (probabilityOfChordInLabel + smoothing);
+            } else {
+              return total;
+            }
+          },
+          classifier.labelProbabilities.get(difficulty) + smoothing,
+        );
+        classified.set(difficulty, totalLikelihood);
+      },
+    );
+    return classified;
+  },
 };
 
 export const songList = {
@@ -91,25 +113,4 @@ function setLabelsAndProbabilities() {
   setLabelProbabilities();
   setChordCountsInLabels();
   setProbabilityOfChordsInLabels();
-}
-
-export function classify(chords) {
-  const smoothing = 1.01;
-  const classified = new Map();
-  classifier.labelProbabilities.forEach(function (_probabilities, difficulty) {
-    const totalLikelihood = chords.reduce(
-      function (total, chord) {
-        const probabilityOfChordInLabel =
-          classifier.probabilityOfChordsInLabels.get(difficulty)[chord];
-        if (probabilityOfChordInLabel) {
-          return total * (probabilityOfChordInLabel + smoothing);
-        } else {
-          return total;
-        }
-      },
-      classifier.labelProbabilities.get(difficulty) + smoothing,
-    );
-    classified.set(difficulty, totalLikelihood);
-  });
-  return classified;
 }
