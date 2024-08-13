@@ -1,4 +1,4 @@
-import { classifier, songList, trainAll, welcomeMessage } from "../src";
+import { classifier, welcomeMessage } from "../src";
 
 describe("welcomeMessage", () => {
   it("returns a welcome message", () => {
@@ -21,21 +21,33 @@ describe("labelProbabilities", () => {
 });
 
 describe("classify", () => {
-  songList.addSong("imagine", ["c", "cmaj7", "f", "am", "dm", "g", "e7"], 0);
-  songList.addSong("somewhereOverTheRainbow", ["c", "em", "f", "g", "am"], 0);
-  songList.addSong("tooManyCooks", ["c", "g", "f"], 0);
-  songList.addSong(
+  classifier.songList.addSong(
+    "imagine",
+    ["c", "cmaj7", "f", "am", "dm", "g", "e7"],
+    0,
+  );
+  classifier.songList.addSong(
+    "somewhereOverTheRainbow",
+    ["c", "em", "f", "g", "am"],
+    0,
+  );
+  classifier.songList.addSong("tooManyCooks", ["c", "g", "f"], 0);
+  classifier.songList.addSong(
     "iWillFollowYouIntoTheDark",
     ["f", "dm", "bb", "c", "a", "bbm"],
     1,
   );
-  songList.addSong("babyOneMoreTime", ["cm", "g", "bb", "eb", "fm", "ab"], 1);
-  songList.addSong(
+  classifier.songList.addSong(
+    "babyOneMoreTime",
+    ["cm", "g", "bb", "eb", "fm", "ab"],
+    1,
+  );
+  classifier.songList.addSong(
     "creep",
     ["g", "gsus4", "b", "bsus4", "c", "cmsus4", "cm6"],
     1,
   );
-  songList.addSong(
+  classifier.songList.addSong(
     "paperBag",
     [
       "bm7",
@@ -54,13 +66,17 @@ describe("classify", () => {
     ],
     2,
   );
-  songList.addSong(
+  classifier.songList.addSong(
     "toxic",
     ["cm", "eb", "g", "cdim", "eb7", "d7", "db7", "ab", "gmaj7"],
     2,
   );
-  songList.addSong("bulletproof", ["d#m", "g#", "b", "f#", "g#m", "c#"], 2);
-  trainAll();
+  classifier.songList.addSong(
+    "bulletproof",
+    ["d#m", "g#", "b", "f#", "g#m", "c#"],
+    2,
+  );
+  classifier.trainAll();
 
   it("classifies", () => {
     const classified = classifier.classify([
